@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<app>
+	<!-- Provide task specific name with task tag to distinguish tasks. 
+		 Only ACTIVE task will be executed.
+	-->
+ <task name="temp table data update" owner="Priyankita" status="ACTIVE">
+<insert>
+<incoming-excel>
+  <path>\\\\cpwplc.com\\data\\Everyone\\creditnotes\\</path> 
+  <file-name>cn.xlsx</file-name> 
+  <columns>CREDITNOTE,RTV,AMOUNT</columns> 
+  </incoming-excel>
+<database>
+  <connection4db>CONNECTION_LIVE_UK</connection4db> 
+  <table-name>temp_creditnote</table-name> 
+  <columns>CREDITNOTE,RTV,AMOUNT</columns> 
+
+
+			</database>
+		
+			<post-action>
+				<action suffix="DATE">ACTION_RENAME</action>				
+				<!-- 
+					Post-Action is action to be taken on the processed file. 
+					choose one of below DELETE/MOVE/RENAME.
+					
+					<action>ACTION_DELETE</action>
+					<action path="F://processed//">ACTION_MOVE</action>
+					<action suffix="DATE">ACTION_RENAME</action>
+				-->
+			</post-action>
+
+			<mail>
+				<!-- 
+					Use these tokens to format your mail body.
+					 ##filename, ##tablename, ##dbname, ##recordcount, ##exceptiontrace, ##nl, ##taskname
+				 -->
+				<to>bhatip01@cpwplc.com</to>
+				<cc>babup@cpwplc.com</cc>
+				<bcc></bcc>
+				<subject>test mail 123 </subject>
+				<success-body>Hi all ##nl##nl The ##filename data has been 
+					transferred to ##dbname in ##tablename. ##nl##nl Regards,</success-body>
+				<failure-body>Hi all,##nl##nl Exception occured.  ##nl  ##exceptiontrace ##nl##nl Regards,</failure-body>
+				
+			</mail>
+			
+		</insert>
+	</task>
+	
+	
+			
+</app>
