@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<app>
+	<!-- Provide task specific name with task tag to distinguish tasks. 
+		 Only ACTIVE task will be executed.
+	-->
+	<task name="temp table data update" owner="name" status="INACTIVE">
+		<insert>
+			<incoming-excel>
+				<!-- <format>.xlsx</format>   --> <!-- Currently not in use.. -->
+				
+				<path>F://_test//</path>   <!-- need double slash (//) at end of path -->
+				<file-name>JavaBooks.xlsx</file-name>
+				<columns>userid, username</columns>
+
+			</incoming-excel>
+			
+			<database>
+				<connection4db>CONNECTION_IMACS_QA</connection4db>
+				<table-name>imacs.temp_test</table-name>
+				<columns>empid,empname</columns>
+				
+				<!-- 
+					This date format should be such as provided in excel sheet.
+					In excel sheet all data is treated as String and later converted such as DB.
+					
+					<data-type>NUMBER,STRING,DATE(DD-MM-YYYY hh:mi:ss)<data-type>   #Currently not in use.. 
+				 -->
+				
+				<!-- Note: Database table must have CREATED_ON and CREATED_BY columns.
+						   These two columns will automatically get updated by tool.
+						   will throw exception if these columns are not present in table.					
+				 -->
+				
+				<!-- 
+					<connection-db>
+						CONNECTION_IMACS_PROD/CONNECTION_LIVE_UK/CONNECTION_IMACS_QA/CONNECTION_PIE_UK_QA
+					</connection-db>
+					
+					Provide database specific properties with below tags.
+					<url>dkjskdj</url>  #no 
+					<username>imacs</username>	#no 
+					<password>imacs</password>	#no
+					
+					<table-name>imacs.mytemp</table-name>
+					<columns>colA,colB,colC</columns>
+				 -->
+			</database>
+			
+			<post-action>
+				<action path="F://TESTING//">ACTION_MOVE</action>
+				
+				<!-- 
+				
+		  			Post-Action is action to be taken on the processed file. 
+					choose one of below DELETE/MOVE/RENAME.
+					#need double slash (//) at end of path
+					
+					<action>ACTION_DELETE</action>
+					<action path="F://processed//">
+						ACTION_MOVE
+					</action>
+					<action suffix="DATE">ACTION_RENAME</action>
+				
+				-->
+			</post-action>
+
+			<mail>
+				<!-- 
+					Use these tokens to format your mail body.
+					 ##filename, ##tablename, ##dbname, ##recordcount, ##exceptiontrace, ##nl, ##taskname
+				 -->
+				<to>ChaudhN03@cpwplc.com</to>
+				<cc>SirajA@cpwplc.com</cc>
+				<bcc></bcc>
+				<subject>Transfering file data to DB response mail test</subject>
+				<success-body>Hi all ##nl The ##filename data has been 
+					transferred to ##dbname in ##tablename. ##nl Regards,</success-body>
+				<failure-body>Hi all,##nl Exception occured.  ##nl  ##exceptiontrace ##nl Regards,</failure-body>
+			</mail>
+			
+		</insert>
+	</task>
+	
+	<task name="temp table data update" owner="nishant" status="ACTIVE">
+		<insert>
+			<incoming-excel> 
+				<path>F://_test//</path>
+				<file-name>txn.xlsx</file-name>
+				<columns>id,transaction, DATE</columns>
+			</incoming-excel>
+			
+			<database>
+				<connection4db>CONNECTION_PIE_UK_QA</connection4db>
+				<table-name>temp_nishant</table-name>
+				<columns>id,transaction,date_txn</columns>
+				
+				<!-- Note: Database table must have CREATED_ON and CREATED_BY columns.
+						   These two columns will automatically get updated by tool.
+						   will throw exception if these columns are not present in table.					
+				 -->
+				
+				<!-- 
+					<connection-db>
+						CONNECTION_IMACS_PROD/CONNECTION_LIVE_UK/CONNECTION_IMACS_QA/CONNECTION_PIE_UK_QA
+					</connection-db>
+					
+					<data-type>NUMBER,STRING,DATE(DD-MM-YYYY hh:mi)<data-type>
+					
+					<table-name>imacs.mytemp</table-name>
+					<columns>colA,colB,colC</columns>
+				 -->
+			</database>
+			
+			<post-action>
+				<action path="F://TESTING//">ACTION_MOVE</action>
+				
+				<!-- 
+					Post-Action is action to be taken on the processed file. 
+					choose one of below DELETE/MOVE/RENAME.
+					
+					<action>ACTION_DELETE</action>
+					<action path="F://processed//">ACTION_MOVE</action>
+					<action suffix="DATE">ACTION_RENAME</action>
+				-->
+			</post-action>
+
+			<mail>
+				<!-- 
+					Use these tokens to format your mail body.
+					 ##filename, ##tablename, ##dbname, ##recordcount, ##exceptiontrace, ##nl, ##taskname
+				 -->
+				<to>ChaudhN03@cpwplc.com</to>
+				<cc></cc>
+				<bcc></bcc>
+				<subject>test mail </subject>
+				<success-body>Hi all ##nl##nl The ##filename data has been 
+					transferred to ##dbname in ##tablename. ##nl##nl Regards,</success-body>
+				<failure-body>Hi all,##nl##nl Exception occured.  ##nl  ##exceptiontrace ##nl##nl Regards,</failure-body>
+				
+			</mail>
+			
+		</insert>
+	</task>
+	
+
+
+</app>
+
